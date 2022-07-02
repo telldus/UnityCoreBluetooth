@@ -44,10 +44,10 @@ public func ucb_manager_shared_register_onUpdateState(_ handler: @escaping @conv
 }
 
 @_cdecl("ucb_manager_shared_register_onDiscoverPeripheral")
-public func ucb_manager_shared_register_onDiscoverPeripheral(_ handler: @escaping @convention(c) (UnsafePointer<CBPeripheral>) -> Void) {
-    UnityCoreBluetoothManager.shared.onDiscoverPeripheralHandler = { (peripheral: CBPeripheral) in
+public func ucb_manager_shared_register_onDiscoverPeripheral(_ handler: @escaping @convention(c) (UnsafePointer<CBPeripheral>, UnsafePointer<CChar>?, CInt) -> Void) {
+    UnityCoreBluetoothManager.shared.onDiscoverPeripheralHandler = { (peripheral: CBPeripheral, advertisementData: String, RSSI: NSNumber) in
         let ptr = Unmanaged.passUnretained(peripheral).toOpaque().assumingMemoryBound(to: CBPeripheral.self)
-        handler(ptr)
+        handler(ptr, (advertisementData as NSString).utf8String, CInt(truncating: RSSI))
     }
 }
 

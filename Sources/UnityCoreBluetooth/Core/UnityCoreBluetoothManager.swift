@@ -14,7 +14,7 @@ internal class UnityCoreBluetoothManager: NSObject {
 
     public var onErrorMessageHandler: ((_ message: String) -> Void)?
     public var onUpdateStateHandler: ((_ state: String) -> Void)?
-    public var onDiscoverPeripheralHandler: ((_ peripheral: CBPeripheral) -> Void)?
+    public var onDiscoverPeripheralHandler: ((_ peripheral: CBPeripheral, _ advertisementData: String, _ RSSI: NSNumber) -> Void)?
     public var onConnectPeripheralHandler: ((_ peripheral: CBPeripheral) -> Void)?
     public var onDiscoverServicelHandler: ((_ service: CBService) -> Void)?
     public var onDiscoverCharacteristiclHandler: ((_ characteristic: CBCharacteristic) -> Void)?
@@ -66,7 +66,7 @@ extension UnityCoreBluetoothManager: CBCentralManagerDelegate {
 
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
         peripherals[peripheral.identifier.uuidString] = peripheral
-        self.onDiscoverPeripheralHandler?(peripheral)
+        self.onDiscoverPeripheralHandler?(peripheral, advertisementData.description, RSSI)
     }
 
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
