@@ -66,7 +66,26 @@ extension UnityCoreBluetoothManager: CBCentralManagerDelegate {
 
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
         peripherals[peripheral.identifier.uuidString] = peripheral
-        self.onDiscoverPeripheralHandler?(peripheral, advertisementData.description, RSSI)
+        
+        var jsonString = "";
+        
+        if advertisementData.keys.contains("kCBAdvDataLocalName") && advertisementData.keys.contains("kCBAdvDataManufacturerData") {
+            let kCBAdvDataLocalNameValue: String = advertisementData["kCBAdvDataLocalName"] as! String
+            let ManfcData = advertisementData["kCBAdvDataManufacturerData"] as! Data;
+            let kCBAdvDataManufacturerDataValue: String = ManfcData.hexEncodedString()
+            
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: [
+                    "kCBAdvDataLocalName": kCBAdvDataLocalNameValue,
+                    "kCBAdvDataManufacturerData": kCBAdvDataManufacturerDataValue,
+                ], options: [])
+                jsonString = String(data: jsonData, encoding: String.Encoding.ascii)!
+            } catch let error {
+                print("UnityCoreBluetoothManager didDiscover JSONSerialization exception : "+error.localizedDescription)
+            }
+        }
+        
+        self.onDiscoverPeripheralHandler?(peripheral, jsonString, RSSI)
     }
 
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -94,5 +113,17 @@ extension UnityCoreBluetoothManager: CBPeripheralDelegate {
 
     public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         self.onUpdateValueHandler?(characteristic, characteristic.value ?? Data())
+    }
+}
+
+extension Data {
+    struct HexEncodingOptions: OptionSet {
+        let rawValue: Int
+        static let upperCase = HexEncodingOptions(rawValue: 1 << 0)
+    }
+
+    func hexEncodedString(options: HexEncodingOptions = []) -> String {
+        let format = options.contains(.upperCase) ? "%02hhX" : "%02hhx"
+        return self.map { String(format: format, $0) }.joined()
     }
 }
