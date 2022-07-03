@@ -18,13 +18,13 @@ namespace UnityCoreBluetooth.NativeInterface
         }
 
         // OnDiscoverPeripheral ----------------------------------------------------------------------------
-        public Action<IntPtr> OnDiscoverPeripheralHandler;
+        public Action<IntPtr, string, int> OnDiscoverPeripheralHandler;
 
         [MonoPInvokeCallback(typeof(UcbManager.ucb_manager_shared_onDiscoverPeripheral_delegate))]
-        private static void OnDiscoverPeripheralCallback(IntPtr peripheral)
+        private static void OnDiscoverPeripheralCallback(IntPtr peripheral, string advertisementData, int rssi)
         {
             if (Shared.OnDiscoverPeripheralHandler == null) return;
-            Shared.OnDiscoverPeripheralHandler(peripheral);
+            Shared.OnDiscoverPeripheralHandler(peripheral, advertisementData, rssi);
         }
 
         // OnConnectPeripheral -----------------------------------------------------------------------------

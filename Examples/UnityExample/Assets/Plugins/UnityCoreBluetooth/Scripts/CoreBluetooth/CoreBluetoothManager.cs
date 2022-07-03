@@ -11,11 +11,11 @@ namespace UnityCoreBluetooth
             wrapper.OnUpdateStateHandler = action;
         }
 
-        public void OnDiscoverPeripheral(Action<CoreBluetoothPeripheral> action)
+        public void OnDiscoverPeripheral(Action<CoreBluetoothPeripheral, string, int> action)
         {
-            wrapper.OnDiscoverPeripheralHandler = (IntPtr ptr) =>
+            wrapper.OnDiscoverPeripheralHandler = (IntPtr ptr, string advertisementData, int rssi) =>
             {
-                action(new CoreBluetoothPeripheral(ptr));
+                action(new CoreBluetoothPeripheral(ptr), advertisementData, rssi);
             };
         }
 

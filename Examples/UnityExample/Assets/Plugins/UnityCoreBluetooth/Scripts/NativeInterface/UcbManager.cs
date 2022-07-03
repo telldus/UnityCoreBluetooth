@@ -32,7 +32,7 @@ namespace UnityCoreBluetooth.NativeInterface
         // -------------------------------------------------------------------------------------------------
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void ucb_manager_shared_onDiscoverPeripheral_delegate(IntPtr peripheral);
+        public delegate void ucb_manager_shared_onDiscoverPeripheral_delegate(IntPtr peripheral, string advertisementData, int rssi);
 
         [DllImport(ImportConfig.TargetName)]
         public static extern void ucb_manager_shared_register_onDiscoverPeripheral(ucb_manager_shared_onDiscoverPeripheral_delegate handler);
