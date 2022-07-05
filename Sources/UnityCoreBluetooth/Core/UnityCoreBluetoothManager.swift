@@ -78,6 +78,7 @@ extension UnityCoreBluetoothManager: CBCentralManagerDelegate {
                 let jsonData = try JSONSerialization.data(withJSONObject: [
                     "kCBAdvDataLocalName": kCBAdvDataLocalNameValue,
                     "kCBAdvDataManufacturerData": kCBAdvDataManufacturerDataValue,
+                    "advertisementDataString": advertisementData.description,
                 ], options: [])
                 jsonString = String(data: jsonData, encoding: String.Encoding.ascii)!
             } catch let error {
