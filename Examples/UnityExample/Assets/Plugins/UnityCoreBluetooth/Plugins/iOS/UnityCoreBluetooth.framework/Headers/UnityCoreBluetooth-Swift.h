@@ -214,11 +214,21 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 
 @class CBCharacteristic;
+@class CBService;
+
+SWIFT_EXTERN CBService * _Nonnull const * _Nullable ucb_characteristic_getPeripheral(CBCharacteristic * _Nonnull const * _Nonnull characteristic) SWIFT_WARN_UNUSED_RESULT;
+
 
 SWIFT_EXTERN char const * _Nullable ucb_characteristic_getPropertis(CBCharacteristic * _Nonnull const * _Nonnull characteristic) SWIFT_WARN_UNUSED_RESULT;
 
 
+SWIFT_EXTERN CBService * _Nonnull const * _Nullable ucb_characteristic_getService(CBCharacteristic * _Nonnull const * _Nonnull characteristic) SWIFT_WARN_UNUSED_RESULT;
+
+
 SWIFT_EXTERN char const * _Nullable ucb_characteristic_getUuid(CBCharacteristic * _Nonnull const * _Nonnull characteristic) SWIFT_WARN_UNUSED_RESULT;
+
+
+SWIFT_EXTERN void ucb_characteristic_read(CBCharacteristic * _Nonnull const * _Nonnull characteristic);
 
 
 SWIFT_EXTERN void ucb_characteristic_setNotify(CBCharacteristic * _Nonnull const * _Nonnull characteristic, BOOL enable);
@@ -242,7 +252,6 @@ SWIFT_EXTERN void ucb_manager_shared_register_onDiscoverCharacteristic(void (* _
 
 SWIFT_EXTERN void ucb_manager_shared_register_onDiscoverPeripheral(void (* _Nonnull handler)(CBPeripheral * _Nonnull const * _Nonnull, char const * _Nullable, int));
 
-@class CBService;
 
 SWIFT_EXTERN void ucb_manager_shared_register_onDiscoverService(void (* _Nonnull handler)(CBService * _Nonnull const * _Nonnull));
 
@@ -266,6 +275,9 @@ SWIFT_EXTERN void ucb_peripheral_discoverServicesWithPeripheral(CBPeripheral * _
 
 
 SWIFT_EXTERN char const * _Nullable ucb_peripheral_getName(CBPeripheral * _Nonnull const * _Nonnull peripheral) SWIFT_WARN_UNUSED_RESULT;
+
+
+SWIFT_EXTERN char const * _Nullable ucb_peripheral_getUUID(CBPeripheral * _Nonnull const * _Nonnull peripheral) SWIFT_WARN_UNUSED_RESULT;
 
 
 SWIFT_EXTERN void ucb_service_discoverCharacteristic(CBService * _Nonnull const * _Nonnull service);

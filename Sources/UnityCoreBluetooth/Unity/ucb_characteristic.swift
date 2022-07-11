@@ -31,13 +31,40 @@ public func ucb_characteristic_getPropertis(_ characteristic: UnsafePointer<CBCh
     return UnsafePointer(ptr)
 }
 
+@_cdecl("ucb_characteristic_getService")
+public func ucb_characteristic_getService(_ characteristic: UnsafePointer<CBCharacteristic>) -> UnsafePointer<CBService>? {
+    let characteristic = Unmanaged<CBCharacteristic>.fromOpaque(characteristic).takeUnretainedValue()
+    guard let service: CBService = characteristic.service else {
+        return nil
+    }
+    let ptr = Unmanaged.passUnretained(service).toOpaque().assumingMemoryBound(to: CBService.self)
+    return UnsafePointer(ptr)
+}
+
+@_cdecl("ucb_characteristic_getPeripheral")
+public func ucb_characteristic_getPeripheral(_ characteristic: UnsafePointer<CBCharacteristic>) -> UnsafePointer<CBService>? {
+    let characteristic = Unmanaged<CBCharacteristic>.fromOpaque(characteristic).takeUnretainedValue()
+    guard let peripheral: CBPeripheral = characteristic.service?.peripheral else {
+        return nil
+    }
+    let ptr = Unmanaged.passUnretained(peripheral).toOpaque().assumingMemoryBound(to: CBService.self)
+    return UnsafePointer(ptr)
+}
+
 @_cdecl("ucb_characteristic_write")
 public func ucb_characteristic_write(_ characteristic: UnsafePointer<CBCharacteristic>,
                                      _ value: UnsafePointer<UInt8>?, _ len: CLong) {
     let characteristic = Unmanaged<CBCharacteristic>.fromOpaque(characteristic).takeUnretainedValue()
     let peripheral: CBPeripheral? = characteristic.service?.peripheral
     let data = Data(bytes: value!, count: len)
-    peripheral?.writeValue(data, for: characteristic, type: .withoutResponse)
+    peripheral?.writeValue(data, for: characteristic, type: .withResponse)
+}
+
+@_cdecl("ucb_characteristic_read")
+public func ucb_characteristic_read(_ characteristic: UnsafePointer<CBCharacteristic>) {
+    let characteristic = Unmanaged<CBCharacteristic>.fromOpaque(characteristic).takeUnretainedValue()
+    let peripheral: CBPeripheral? = characteristic.service?.peripheral
+    peripheral?.readValue(for: characteristic)
 }
 
 @_cdecl("ucb_characteristic_setNotify")

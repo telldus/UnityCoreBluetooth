@@ -66,7 +66,6 @@ extension UnityCoreBluetoothManager: CBCentralManagerDelegate {
 
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
         peripherals[peripheral.identifier.uuidString] = peripheral
-        
         var jsonString = "";
         
         if advertisementData.keys.contains("kCBAdvDataLocalName") && advertisementData.keys.contains("kCBAdvDataManufacturerData") {
@@ -78,7 +77,7 @@ extension UnityCoreBluetoothManager: CBCentralManagerDelegate {
                 let jsonData = try JSONSerialization.data(withJSONObject: [
                     "kCBAdvDataLocalName": kCBAdvDataLocalNameValue,
                     "kCBAdvDataManufacturerData": kCBAdvDataManufacturerDataValue,
-                    "advertisementDataString": advertisementData.description,
+                    "advertisementDataString": advertisementData.description, // Useful for debug
                 ], options: [])
                 jsonString = String(data: jsonData, encoding: String.Encoding.ascii)!
             } catch let error {

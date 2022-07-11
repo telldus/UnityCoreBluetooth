@@ -13,10 +13,19 @@ namespace UnityCoreBluetooth.NativeInterface
         public static extern string ucb_characteristic_getPropertis(IntPtr characteristic);
 
         [DllImport(ImportConfig.TargetName)]
+        public static extern IntPtr ucb_characteristic_getService(IntPtr characteristic);
+
+        [DllImport(ImportConfig.TargetName)]
+        public static extern IntPtr ucb_characteristic_getPeripheral(IntPtr characteristic);
+
+        [DllImport(ImportConfig.TargetName)]
         public static extern void ucb_characteristic_setNotify(IntPtr characteristic, bool enable);
 
         [DllImport(ImportConfig.TargetName)]
         public static extern void ucb_characteristic_write(IntPtr characteristic, byte[] value, long len);
+
+        [DllImport(ImportConfig.TargetName)]
+        public static extern void ucb_characteristic_read(IntPtr characteristic);
     }
 }
 #endif

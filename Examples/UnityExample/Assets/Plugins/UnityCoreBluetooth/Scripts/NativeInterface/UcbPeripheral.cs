@@ -10,6 +10,9 @@ namespace UnityCoreBluetooth.NativeInterface
         public static extern string ucb_peripheral_getName(IntPtr peripheral);
 
         [DllImport(ImportConfig.TargetName)]
+        public static extern string ucb_peripheral_getUUID(IntPtr peripheral);
+
+        [DllImport(ImportConfig.TargetName)]
         public static extern void ucb_peripheral_discoverServicesWithPeripheral(IntPtr peripheral);
     }
 }

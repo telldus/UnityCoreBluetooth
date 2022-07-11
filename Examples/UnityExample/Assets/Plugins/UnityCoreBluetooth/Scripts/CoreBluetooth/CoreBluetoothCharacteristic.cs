@@ -31,9 +31,30 @@ namespace UnityCoreBluetooth
             }
         }
 
+        public CoreBluetoothService Service
+        {
+            get
+            {
+                return new CoreBluetoothService(NativeInterface.UcbCharacteristic.ucb_characteristic_getService(nativePtr));
+            }
+        }
+
+        public CoreBluetoothPeripheral Peripheral
+        {
+            get
+            {
+                return new CoreBluetoothPeripheral(NativeInterface.UcbCharacteristic.ucb_characteristic_getPeripheral(nativePtr));
+            }
+        }
+
         public void Write(byte[] value)
         {
             NativeInterface.UcbCharacteristic.ucb_characteristic_write(nativePtr, value, value.Length);
+        }
+
+        public void Read()
+        {
+            NativeInterface.UcbCharacteristic.ucb_characteristic_read(nativePtr);
         }
 
         public void SetNotifyValue(bool enable)
