@@ -85,3 +85,20 @@ public func ucb_manager_shared_register_onUpdateValue(_ handler: @escaping @conv
         }
     }
 }
+
+@_cdecl("ucb_manager_shared_register_onUpdateRSSI")
+public func ucb_manager_shared_register_onUpdateRSSI(_ handler: @escaping @convention(c) (UnsafePointer<CBPeripheral>, CInt) -> Void) {
+    UnityCoreBluetoothManager.shared.onUpdateRSSIHandler = { (peripheral: CBPeripheral, RSSI: NSNumber) in
+        let ptr = Unmanaged.passUnretained(peripheral).toOpaque().assumingMemoryBound(to: CBPeripheral.self)
+        handler(ptr, CInt(truncating: RSSI))
+    }
+}
+
+@_cdecl("ucb_manager_shared_register_onDisconnectPeripheral")
+public func ucb_manager_shared_register_onDisconnectPeripheral(_ handler: @escaping @convention(c) (UnsafePointer<CBPeripheral>, UnsafePointer<CChar>?) -> Void) {
+    UnityCoreBluetoothManager.shared.onDisconnectPeripheralHandler = { (peripheral: CBPeripheral, error: String) in
+        let ptr = Unmanaged.passUnretained(peripheral).toOpaque().assumingMemoryBound(to: CBPeripheral.self)
+        handler(ptr, (error as NSString).utf8String)
+    }
+}
+

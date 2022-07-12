@@ -35,6 +35,11 @@ namespace UnityCoreBluetooth
         {
             NativeInterface.UcbPeripheral.ucb_peripheral_discoverServicesWithPeripheral(nativePtr);
         }
+
+        public void readRSSI()
+        {
+            NativeInterface.UcbPeripheral.ucb_peripheral_readRSSI(nativePtr);
+        }
     }
 }
 #endif

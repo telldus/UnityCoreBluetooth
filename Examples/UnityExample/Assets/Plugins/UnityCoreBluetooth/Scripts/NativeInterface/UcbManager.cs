@@ -68,6 +68,24 @@ namespace UnityCoreBluetooth.NativeInterface
 
         [DllImport(ImportConfig.TargetName)]
         public static extern void ucb_manager_shared_register_onUpdateValue(ucb_manager_shared_onUpdateValue_delegate handler);
+
+        // -------------------------------------------------------------------------------------------------
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void ucb_manager_shared_onUpdateRSSI_delegate(IntPtr peripheral, int rssi);
+
+        [DllImport(ImportConfig.TargetName)]
+        public static extern void ucb_manager_shared_register_onUpdateRSSI(ucb_manager_shared_onUpdateRSSI_delegate handler);
+
+        // -------------------------------------------------------------------------------------------------
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void ucb_manager_shared_onDisconnectPeripheral_delegate(IntPtr peripheral, string error);
+
+        [DllImport(ImportConfig.TargetName)]
+        public static extern void ucb_manager_shared_register_onDisconnectPeripheral(ucb_manager_shared_onDisconnectPeripheral_delegate handler);
+
+        // -------------------------------------------------------------------------------------------------
     }
 }
 #endif

@@ -14,6 +14,9 @@ namespace UnityCoreBluetooth.NativeInterface
 
         [DllImport(ImportConfig.TargetName)]
         public static extern void ucb_peripheral_discoverServicesWithPeripheral(IntPtr peripheral);
+
+        [DllImport(ImportConfig.TargetName)]
+        public static extern void ucb_peripheral_readRSSI(IntPtr peripheral);
     }
 }
 #endif

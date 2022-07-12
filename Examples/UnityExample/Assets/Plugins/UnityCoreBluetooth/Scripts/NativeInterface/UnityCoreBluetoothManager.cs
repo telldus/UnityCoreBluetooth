@@ -68,6 +68,24 @@ namespace UnityCoreBluetooth.NativeInterface
             Shared.OnUpdateValueHandler(characteristic, result);
         }
 
+        // OnUpdateRSSI ----------------------------------------------------------------------------------
+        public Action<IntPtr, int> OnUpdateRSSIHandler;
+
+        [MonoPInvokeCallback(typeof(UcbManager.ucb_manager_shared_onUpdateRSSI_delegate))]
+        private static void OnUpdateRSSICallback(IntPtr peripheral, int RSSI)
+        {
+            Shared.OnUpdateRSSIHandler(peripheral, RSSI);
+        }
+
+        // OnUpdateRSSI ----------------------------------------------------------------------------------
+        public Action<IntPtr, string> OnDisconnectPeripheralHandler;
+
+        [MonoPInvokeCallback(typeof(UcbManager.ucb_manager_shared_onDisconnectPeripheral_delegate))]
+        private static void OnDisconnectPeripheralCallback(IntPtr peripheral, string error)
+        {
+            Shared.OnDisconnectPeripheralHandler(peripheral, error);
+        }
+
         private UnityCoreBluetoothManagerWrapper()
         {
             Debug.Log("UnityCoreBluetoothManager init");
@@ -77,6 +95,8 @@ namespace UnityCoreBluetooth.NativeInterface
             UcbManager.ucb_manager_shared_register_onDiscoverService(OnDiscoverServiceCallback);
             UcbManager.ucb_manager_shared_register_onDiscoverCharacteristic(OnDiscoverCharacteristicCallback);
             UcbManager.ucb_manager_shared_register_onUpdateValue(OnUpdateValueCallback);
+            UcbManager.ucb_manager_shared_register_onUpdateRSSI(OnUpdateRSSICallback);
+            UcbManager.ucb_manager_shared_register_onDisconnectPeripheral(OnDisconnectPeripheralCallback);
         }
 
         ~UnityCoreBluetoothManagerWrapper()
@@ -87,6 +107,8 @@ namespace UnityCoreBluetooth.NativeInterface
             OnDiscoverServiceHandler = null;
             OnDiscoverCharacteristicHandler = null;
             OnUpdateValueHandler = null;
+            OnUpdateRSSIHandler = null;
+            OnDisconnectPeripheralHandler = null;
             Debug.Log("UnityCoreBluetoothManager deinit");
         }
 

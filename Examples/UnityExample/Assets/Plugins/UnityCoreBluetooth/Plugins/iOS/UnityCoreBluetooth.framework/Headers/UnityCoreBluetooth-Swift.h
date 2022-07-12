@@ -247,6 +247,9 @@ SWIFT_EXTERN void ucb_manager_shared_instantiate(void);
 SWIFT_EXTERN void ucb_manager_shared_register_onConnectPeripheral(void (* _Nonnull handler)(CBPeripheral * _Nonnull const * _Nonnull));
 
 
+SWIFT_EXTERN void ucb_manager_shared_register_onDisconnectPeripheral(void (* _Nonnull handler)(CBPeripheral * _Nonnull const * _Nonnull, char const * _Nullable));
+
+
 SWIFT_EXTERN void ucb_manager_shared_register_onDiscoverCharacteristic(void (* _Nonnull handler)(CBCharacteristic * _Nonnull const * _Nonnull));
 
 
@@ -254,6 +257,9 @@ SWIFT_EXTERN void ucb_manager_shared_register_onDiscoverPeripheral(void (* _Nonn
 
 
 SWIFT_EXTERN void ucb_manager_shared_register_onDiscoverService(void (* _Nonnull handler)(CBService * _Nonnull const * _Nonnull));
+
+
+SWIFT_EXTERN void ucb_manager_shared_register_onUpdateRSSI(void (* _Nonnull handler)(CBPeripheral * _Nonnull const * _Nonnull, int));
 
 
 SWIFT_EXTERN void ucb_manager_shared_register_onUpdateState(void (* _Nonnull handler)(char const * _Nullable));
@@ -278,6 +284,9 @@ SWIFT_EXTERN char const * _Nullable ucb_peripheral_getName(CBPeripheral * _Nonnu
 
 
 SWIFT_EXTERN char const * _Nullable ucb_peripheral_getUUID(CBPeripheral * _Nonnull const * _Nonnull peripheral) SWIFT_WARN_UNUSED_RESULT;
+
+
+SWIFT_EXTERN void ucb_peripheral_readRSSI(CBPeripheral * _Nonnull const * _Nonnull peripheral);
 
 
 SWIFT_EXTERN void ucb_service_discoverCharacteristic(CBService * _Nonnull const * _Nonnull service);

@@ -36,3 +36,9 @@ public func ucb_peripheral_discoverServicesWithPeripheral(_ peripheral: UnsafePo
     let peripheral = Unmanaged<CBPeripheral>.fromOpaque(peripheral).takeUnretainedValue()
     peripheral.discoverServices(nil)
 }
+
+@_cdecl("ucb_peripheral_readRSSI")
+public func ucb_peripheral_readRSSI(_ peripheral: UnsafePointer<CBPeripheral>) {
+    let peripheral = Unmanaged<CBPeripheral>.fromOpaque(peripheral).takeUnretainedValue()
+    peripheral.readRSSI()
+}

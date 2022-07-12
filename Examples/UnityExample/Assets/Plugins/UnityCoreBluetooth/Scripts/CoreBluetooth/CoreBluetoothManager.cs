@@ -51,6 +51,22 @@ namespace UnityCoreBluetooth
             };
         }
 
+        public void OnUpdateRSSI(Action<CoreBluetoothPeripheral, int> action)
+        {
+            wrapper.OnUpdateRSSIHandler = (IntPtr ptr, int rssi) =>
+            {
+                action(new CoreBluetoothPeripheral(ptr), rssi);
+            };
+        }
+
+        public void OnDisconnectPeripheral(Action<CoreBluetoothPeripheral, string> action)
+        {
+            wrapper.OnDisconnectPeripheralHandler = (IntPtr ptr, string error) =>
+            {
+                action(new CoreBluetoothPeripheral(ptr), error);
+            };
+        }
+
         private readonly NativeInterface.UnityCoreBluetoothManagerWrapper wrapper;
 
         private CoreBluetoothManager()
